@@ -3,6 +3,7 @@
 import os
 import time
 import pickle, hashlib
+import GBPP
 
 DEBUG=False
 
@@ -31,8 +32,14 @@ while True:
     currentPatternNumer = 0
 
   print "playing pattern %s (filename: %s)" % (currentPatternNumer, patternfiles[currentPatternNumer])
+  GBPP.ledpattern = [
+     1, 5,10,25,50,66,88,99,  1000, 2,
+    99,88,66,50,25,10, 5, 1,  2000, 4,
+    50,50,50,50,50,50,50,50,  4000, 2,
+  ]
+  GBPP.playPattern()
+  print "pattern finished"
 
-  time.sleep(2)
   if len(patternfiles)-1 <= currentPatternNumer:
     currentPatternNumer = 0
   else:

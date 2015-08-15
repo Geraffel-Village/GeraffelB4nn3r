@@ -24,25 +24,25 @@ gpios =    [14, 15, 18, 23, 24, 25, 8, 7]
 letters = ["G", "E1", "R", "A", "F1", "f2", "E2", "L"]
 frequenz=100    #PWM-Frequenz in Hz
 
-end=0
-
 #LEDMUSTER:
 ledpattern = [
-     1, 5,10,25,50,66,88,99,  1000, 2,
-    99,88,66,50,25,10, 5, 1,  2000, 4,
-    50,50,50,50,50,50,50,50,  4000, 2,
+    None,
      ]
     
 import RPi.GPIO as GPIO
 from time import sleep
 
-#set up gpio
+def playPattern():
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
+  end=0
 
-i=0
-while i in range(8):
+  #set up gpio
+
+  GPIO.setmode(GPIO.BCM)
+  GPIO.setwarnings(False)
+
+  i=0
+  while i in range(8):
     gpio = gpios[i]                         #aktuelen GPIO aus Liste nehmen
     GPIO.setup(gpio,GPIO.OUT)               #und auf Ausgang stellen
     letters[i] = GPIO.PWM(gpio,frequenz)    #Buchstabe aus 1.Liste holen und als PWM schalten mit    
@@ -50,9 +50,9 @@ while i in range(8):
     sleep(0.1)
     i += 1
 
-x=0
-last=0
-while x in range(len(ledpattern)):
+  x=0
+  last=0
+  while x in range(len(ledpattern)):
     
     totaltime=(ledpattern[x+8])
     blendsteps=(ledpattern[x+9])
