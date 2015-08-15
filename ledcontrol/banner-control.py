@@ -32,11 +32,19 @@ while True:
     currentPatternNumer = 0
 
   print "playing pattern %s (filename: %s)" % (currentPatternNumer, patternfiles[currentPatternNumer])
-  GBPP.ledpattern = [
-     1, 5,10,25,50,66,88,99,  1000, 2,
-    99,88,66,50,25,10, 5, 1,  2000, 4,
-    50,50,50,50,50,50,50,50,  4000, 2,
-  ]
+  GBPP.ledpattern = []  # make empty list
+  file = open("%s/%s" %(PATTERN_QUEUE, patternfiles[currentPatternNumer]), "r")
+  for line in file.read().splitlines():
+    if not line.startswith('#'):
+      if DEBUG: print line.split(',')
+      for value in line.split(',')[0:10]: # split() returns empty element at the end
+                                          # so ignore this
+        if DEBUG: print value
+        GBPP.ledpattern.extend([float(value)])
+  file.close()
+  if DEBUG: 
+    print "LED_Pattern:"
+    print GBPP.ledpattern
   GBPP.playPattern()
   print "pattern finished"
 
