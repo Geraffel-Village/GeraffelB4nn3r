@@ -4,6 +4,7 @@ import os
 import time
 import pickle, hashlib
 import GBPP
+from GBB import GBB1
 
 DEBUG=False
 
@@ -17,6 +18,8 @@ patternfilesHash = hashlib.md5(pickle.dumps(patternfiles)).hexdigest()
 if DEBUG:
   print patternfiles
   print patternfilesHash
+
+output = GBB1()
 
 while True:
   
@@ -45,7 +48,7 @@ while True:
   if DEBUG: 
     print "LED_Pattern:"
     print GBPP.ledpattern
-  GBPP.playPattern()
+  output.display(GBPP.ledpattern)
   print "pattern finished"
 
   if len(patternfiles)-1 <= currentPatternNumer:

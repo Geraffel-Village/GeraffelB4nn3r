@@ -29,27 +29,29 @@ ledpattern = [
     None,
      ]
     
-import RPi.GPIO as GPIO
 from time import sleep
+from GBB import GBB1
 
 def playPattern():
 
   end=0
 
-  #set up gpio
 
-  GPIO.setmode(GPIO.BCM)
-  GPIO.setwarnings(False)
-
+  print "init GPIO-ports"
   i=0
   while i in range(8):
+    print "seting up GPIO: %d" %gpios[i]
     gpio = gpios[i]                         #aktuelen GPIO aus Liste nehmen
     GPIO.setup(gpio,GPIO.OUT)               #und auf Ausgang stellen
+    print "pass - GPIO.setup"
     letters[i] = GPIO.PWM(gpio,frequenz)    #Buchstabe aus 1.Liste holen und als PWM schalten mit    
+    print "pass - GPIO.PWM"
     letters[i].start(ledpattern[i])          #akt. Buchstaben mit akt. PWM Wert starten        
+    print "pass - PWM.start"
     sleep(0.1)
     i += 1
 
+  print "starting pattern"
   x=0
   last=0
   while x in range(len(ledpattern)):
@@ -85,18 +87,21 @@ def playPattern():
     x +=10
     if end==1:
             break
- 
 
 
-#Cleanup
-        
-#PWM.stop()
-#GPIO.cleanup()
-#G.stop()
-#E1.stop()
-#R.stop()
-#A.stop()
-#F1.stop()
-#F2.stop()
-#E2.stop()
-#L.stop()
+  #Cleanup
+          
+#  PWM.stop()
+  for i in range(8):
+    letters[i].stop()          #akt. Buchstaben mit akt. PWM Wert starten        
+    print "pass - GPIO.stop"
+
+#  GPIO.cleanup()
+#  G.stop()
+#  E1.stop()
+#  R.stop()
+#  A.stop()
+#  F1.stop()
+#  F2.stop()
+#  E2.stop()
+#  L.stop()
