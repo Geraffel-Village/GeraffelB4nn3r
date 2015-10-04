@@ -44,7 +44,6 @@ class GBB1(object):
       print "pass - GPIO.PWM"
       self.letters[i].start(0)          #akt. Buchstaben mit akt. PWM Wert starten        
       print "pass - PWM.start"
-      sleep(0.1)
       i += 1
 
   def display(self, ledpattern):
@@ -89,10 +88,13 @@ class GBB1(object):
             break
 
   def cleanup(self):
+    self.__del__()
+
+  def __del__(self):
           
 #  PWM.stop()
     for i in range(8):
-      letters[i].stop()          #akt. Buchstaben mit akt. PWM Wert starten        
+      self.letters[i].stop()          #akt. Buchstaben mit akt. PWM Wert starten        
       print "pass - GPIO.stop"
 
     GPIO.cleanup()
@@ -104,3 +106,4 @@ class GBB1(object):
 #  F2.stop()
 #  E2.stop()
 #  L.stop()
+
